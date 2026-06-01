@@ -26,7 +26,7 @@ async def root(request: Request):
     return templates.TemplateResponse(
         request,
         "index.html",
-        {"title":"한눈에 이적시장"}
+        {"title":"축구 소식"}
     ) 
 
 
