@@ -39,24 +39,26 @@
                     <h3>{{article.title | safe}}</h3>
                     <p class="cafename">[{{article.pubDate}}]</p>
                     <p class="description">{{article.description | safe}}</p>
-                    <a href="{{article.link}}" target="_blank" class="article-link">뉴스 원문 보기</a>
+                    <div class="card-actions">
+                        <a href="{{article.link}}" target="_blank" class="article-link">뉴스 원문 보기</a>
+                        
+                        <form action="/favorites" method="post" class="isFav">
+                            <input type="hidden" name="keyword" value="{{article.keyword}}">
+                            <input type="hidden" name="title" value="{{article.title}}">
+                            <input type="hidden" name="pubDate" value="{{article.pubDate}}">
+                            <input type="hidden" name="description" value="{{article.description}}">
+                            <input type="hidden" name="link" value="{{article.link}}">
+                            <input type="hidden" name="next_url" value="{{next_url}}">
+                            <button type="submit" class="text_fav_button" title="즐겨찾기">
+                                {% if article.is_favorite %}
+                                즐겨찾기 취소
+                                {% else %} 
+                                즐겨찾기 추가
+                                {% endif %} 
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                
-                <form action="/favorites" method="post" class="isFav">
-                    <input type="hidden" name="keyword" value="{{article.keyword}}">
-                    <input type="hidden" name="title" value="{{article.title}}">
-                    <input type="hidden" name="pubDate" value="{{article.pubDate}}">
-                    <input type="hidden" name="description" value="{{article.description}}">
-                    <input type="hidden" name="link" value="{{article.link}}">
-                    <input type="hidden" name="next_url" value="{{next_url}}">
-                    <button type="submit" class="heart_button" title="즐겨찾기">
-                        {% if article.is_favorite %}
-                        ♥
-                        {% else %} 
-                        ♡
-                        {% endif %} 
-                    </button>
-                </form>
             </div>
             {% endfor %}
         </section>

@@ -176,35 +176,36 @@ h3 {
     color: var(--pitch-green);
 }
 
+.card-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 15px;
+}
+
 .isFav {
+    margin: 0;
     padding: 0;
     box-shadow: none;
     border: none;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    min-width: 0;
-    max-width: 0;
     background: transparent;
-    margin: 0;
 }
 
-.heart_button {
+.text_fav_button {
     background-color: transparent;
-    border: none;
-    padding: 0;
+    color: var(--pitch-green);
+    border: 2px solid var(--pitch-green);
+    padding: 6px 12px;
+    font-weight: bold;
+    font-size: 0.85rem;
+    border-radius: 20px;
     cursor: pointer;
-    color: #ccc;
-    font-size: 32px;
-    transition: color 0.3s, transform 0.3s;
+    text-transform: uppercase;
+    transition: background-color 0.2s, color 0.2s;
+    margin: 0 !important;
 }
 
-/* If favorite is true, it's red */
-.heart_button:hover {
-    color: crimson;
-    transform: scale(1.2);
-}
-
-.heart_button[title="즐겨찾기"] {
-    color: crimson;
+.text_fav_button:hover {
+    background-color: var(--pitch-green);
+    color: #fff;
 }
