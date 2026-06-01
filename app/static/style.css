@@ -162,7 +162,7 @@ h3 {
     display: inline-block;
     padding: 8px 15px;
     background-color: var(--pitch-green);
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
     border-radius: 20px;
     font-size: 0.85rem;
@@ -171,9 +171,13 @@ h3 {
     transition: background-color 0.2s, color 0.2s;
 }
 
+.article-link:visited {
+    color: #fff !important;
+}
+
 .article-link:hover {
     background-color: var(--neon-yellow);
-    color: var(--pitch-green);
+    color: var(--pitch-green) !important;
 }
 
 .card-actions {
