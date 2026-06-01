@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/mvp.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>한눈에 이적시장</h1>
+        <nav>
+            <a href="/">검색</a>
+            <a href="/favorites">즐겨찾기 목록</a>
+        </nav>
+    </header>
+    <center>
+        <form id="search_form" action="/search">
+            <input type="text" placeholder="keyword" id="search_input" name="q" value="{{keyword}}">
+            <button>검색</button>
+        </form>
+    </center>
+    <main>
+        {% if articles %}
+        <center>
+            <h3>{{articles|length}}개의 글을 찾았습니다.</h3>
+        </center>
+        <section class="articles-container">
+            {% for article in articles %}
+            <div class="article-card">
+                <div class="article-content">
+                    <h3>{{article.title | safe}}</h3>
+                    <p class="cafename">[{{article.pubDate}}]</p>
+                    <p class="description">{{article.description | safe}}</p>
+                    <a href="{{article.link}}" target="_blank" class="article-link">뉴스 원문 보기</a>
+                </div>
+                
+                <form action="/favorites" method="post" class="isFav">
+                    <input type="hidden" name="keyword" value="{{article.keyword}}">
+                    <input type="hidden" name="title" value="{{article.title}}">
+                    <input type="hidden" name="pubDate" value="{{article.pubDate}}">
+                    <input type="hidden" name="description" value="{{article.description}}">
+                    <input type="hidden" name="link" value="{{article.link}}">
+                    <input type="hidden" name="next_url" value="{{next_url}}">
+                    <button type="submit" class="heart_button" title="즐겨찾기">
+                        {% if article.is_favorite %}
+                        ♥
+                        {% else %} 
+                        ♡
+                        {% endif %} 
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        </section>
+        
+        {% else %}
+        <center>
+            <h3>검색 결과가 없습니다.</h3>
+        </center>
+        {% endif %}
+
+    </main>
+
+</body>
+</html>
