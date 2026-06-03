@@ -28,3 +28,6 @@ instance/
 .DS_Store
 Thumbs.db
 secrets*
+
+# Test files
+test_*.py
