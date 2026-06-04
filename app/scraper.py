@@ -9,11 +9,37 @@ class NaverNewsScraper:
     NAVER_API_SECRET = get_secret("NAVER_API_SECRET")
 
     @staticmethod
+    async def fetch_image(session, url):
+        try:
+            # 타임아웃을 주어 응답이 너무 오래 걸리는 것을 방지
+            async with session.get(url, timeout=3) as response:
+                if response.status == 200:
+                    # 응답의 인코딩을 무시하고 텍스트로 읽음
+                    html = await response.read()
+                    from bs4 import BeautifulSoup
+                    soup = BeautifulSoup(html, 'html.parser')
+                    meta_tag = soup.find('meta', property='og:image')
+                    if meta_tag and meta_tag.get('content'):
+                        return meta_tag['content']
+        except Exception:
+            pass
+        return ""
+
+    @staticmethod
     async def fetch(session, url, headers):
         async with session.get(url, headers=headers) as response:
             if response.status == 200:
                 result = await response.json()
-                return result.get("items", [])
+                items = result.get("items", [])
+                
+                # 각 기사별로 이미지를 병렬로 가져오기
+                tasks = [NaverNewsScraper.fetch_image(session, item['link']) for item in items]
+                images = await asyncio.gather(*tasks)
+                
+                for item, img_url in zip(items, images):
+                    item['image'] = img_url
+                    
+                return items
             return []
 
     def unit_url(self, keyword, start):

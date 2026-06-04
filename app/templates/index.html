@@ -35,6 +35,11 @@
         <section class="articles-container">
             {% for article in articles %}
             <div class="article-card">
+                {% if article.image %}
+                <div class="article-image">
+                    <img src="{{article.image}}" alt="Article Image">
+                </div>
+                {% endif %}
                 <div class="article-content">
                     <h3>{{article.title | safe}}</h3>
                     <p class="cafename">[{{article.pubDate}}]</p>
@@ -48,6 +53,7 @@
                             <input type="hidden" name="pubDate" value="{{article.pubDate}}">
                             <input type="hidden" name="description" value="{{article.description}}">
                             <input type="hidden" name="link" value="{{article.link}}">
+                            <input type="hidden" name="image" value="{{article.image if article.image else ''}}">
                             <input type="hidden" name="next_url" value="{{next_url}}">
                             <button type="submit" class="text_fav_button" title="즐겨찾기">
                                 {% if article.is_favorite %}

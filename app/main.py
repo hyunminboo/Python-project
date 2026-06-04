@@ -54,7 +54,8 @@ async def read_item(request:Request,q:str="축구 이적시장"):
             title=article["title"],
             pubDate=article["pubDate"],
             link=article["link"],
-            description=article.get("description", "")
+            description=article.get("description", ""),
+            image=article.get("image", None)
         )
 
         if article_model.link in favorite_links:
@@ -78,6 +79,7 @@ async def toggle_favorite(
     pubDate:str=Form(...),
     link:str=Form(...),
     description:str=Form(""),
+    image:str=Form(""),
     next_url:str=Form("/")
 ):
     favorite_article =await mongodb.engine.find_one(
@@ -96,6 +98,7 @@ async def toggle_favorite(
             pubDate=pubDate,
             link=link,
             description=description,
+            image=image if image else None,
             is_favorite=True
         )
         await mongodb.engine.save(article)
